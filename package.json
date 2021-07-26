@@ -1,0 +1,27 @@
+{
+  "name": "dona-timos",
+  "version": "1.0.0",
+  "description": "Doña Timos Web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clap-your-brand/dona-timos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clap-your-brand/dona-timos/issues"
+  },
+  "homepage": "https://github.com/clap-your-brand/dona-timos#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  }
+}
