@@ -11,12 +11,12 @@ router.post('/new', (req, res) => {//crea material nou
 });
 
 // /materials/delete/{id}
-router.get('/delete/{id}', (req, res) => {//elimina material
+router.get('/delete/:id', (req, res) => {//elimina material
     res.json({ok: true})
 });
 
 // /materials/update/{id}
-router.post('/update/{id}', (req, res) => {//update material
+router.post('/update/:id', (req, res) => {//update material
     res.json({ok: true})
 });
 
