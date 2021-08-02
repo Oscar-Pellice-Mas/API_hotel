@@ -6,7 +6,7 @@ router.get('/', (req, res) => {//retorna tots els users
 });
 
 // /users/new
-router.get('/new', (req, res) => {//crea usuari nou
+router.post('/new', (req, res) => {//crea usuari nou
     res.json({ok: true})
 });
 

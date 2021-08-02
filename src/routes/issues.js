@@ -11,7 +11,7 @@ router.get('/new', (req, res) => {//crea issue nova
 });
 
 // /issues/update/{id}
-router.get('/update/{id}', (req, res) => {//actualitza issue en el body esta el status
+router.post('/update/{id}', (req, res) => {//actualitza issue en el body esta el status
     res.json({ok: true})
 });
 

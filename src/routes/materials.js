@@ -6,7 +6,7 @@ router.get('/', (req, res) => {//retorna tots els materials
 });
 
 // /materials/new
-router.get('/new', (req, res) => {//crea material nou
+router.post('/new', (req, res) => {//crea material nou
     res.json({ok: true})
 });
 
@@ -16,7 +16,7 @@ router.get('/delete/{id}', (req, res) => {//elimina material
 });
 
 // /materials/update/{id}
-router.get('/update/{id}', (req, res) => {//update material
+router.post('/update/{id}', (req, res) => {//update material
     res.json({ok: true})
 });
 
