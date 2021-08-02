@@ -1,5 +1,7 @@
 const express = require('express');
 const usersRoutes = require('./src/routes/users');
+const issuesRoutes = require('./src/routes/issues');
+const materialsRoutes = require('./src/routes/materials');
 const middleware = require('./src/middlewares/authentication');
 require('dotenv').config();
 
@@ -23,6 +25,10 @@ app.get('/', middleware.authenticationMiddle, (req, res) => {
 });
 
 app.use('/users', usersRoutes);
+
+app.use('/issues', issuesRoutes);
+
+app.use('/materials', materialsRoutes);
 
 const PORT = process.env.PORT || 3000;
 
