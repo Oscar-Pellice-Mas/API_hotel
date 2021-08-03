@@ -1,8 +1,11 @@
+const { getAllUsers } = require('./user.controller');
+
 const router = require('express').Router()
 
 // /users
-router.get('/', (req, res) => {//retorna tots els users
-    res.json({ok: true})
+router.get('/', async (req, res) => {//retorna tots els users
+    const result = await getAllUsers({});
+    res.send({ ...result });
 });
 
 // /users/new

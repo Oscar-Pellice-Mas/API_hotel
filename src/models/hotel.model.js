@@ -1,11 +1,9 @@
-import { Sequelize, Model, DataTypes, GeometryDataType } from "sequelize";
-import { sequelize } from "../../database/dbConnection";
-import { Issue, User } from './index';
+'use strict';
+const { Model } = require ("sequelize");
 
-class Hotel extends Model {}
-
-Hotel.init(
-    {
+module.exports = (sequelize, DataTypes) => {
+  class Hotel extends Model {}
+	Hotel.init({
       id: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -28,15 +26,6 @@ Hotel.init(
       sequelize: sequelize,
       tableName: "hotel",
       modelName: "hotel",
-    }
-);
-
-Hotel.hasMany(Issue, {
-  foreignKey: 'id_hotel',
-  targetKey: 'id',
-});
-
-Hotel.hasMany(User, {
-  foreignKey: 'id_hotel',
-  targetKey: 'id',
-});
+    });
+	return Hotel;
+}

@@ -1,14 +1,15 @@
 const express = require('express');
-const usersRoutes = require('./src/routes/users');
+require('dotenv').config();
+const usersRoutes = require('./src/routes/user/user.routes');
 const issuesRoutes = require('./src/routes/issues');
+const hotelsRoutes = require('./src/routes/hotel/hotel.routes');
 const materialsRoutes = require('./src/routes/materials');
 const middleware = require('./src/middlewares/authentication');
-require('dotenv').config();
 const { db } = require('./src/services/db');
 
-db.authenticate()
-  .then(() => console.log("Connected to database"))
-  .catch((err) => console.log("Error: ", err));
+// db.authenticate()
+//   .then(() => console.log("Connected to database"))
+//   .catch((err) => console.log("Error: ", err));
 
 const app = express();
 
@@ -30,10 +31,9 @@ app.get('/', middleware.authenticationMiddle, (req, res) => {
 });
 
 app.use('/users', usersRoutes);
-
 app.use('/issues', issuesRoutes);
-
 app.use('/materials', materialsRoutes);
+app.use('/hotels', hotelsRoutes);
 
 const PORT = process.env.PORT || 3000;
 

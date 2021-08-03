@@ -1,15 +1,30 @@
-import { Sequelize, Model, DataTypes, GeometryDataType } from "sequelize";
-import { sequelize } from "../../database/dbConnection";
-import { User, Hotel } from './index';
+const { Model } = require ("sequelize");
 
-class Issue extends Model {}
-
-Issue.init(
+module.exports = (sequelize, DataTypes) => {
+  class Issue extends Model {
+    static associate(models) {
+      Issue.belongsTo(models.hotel, {
+        foreignKey: 'id_hotel',
+        as: 'hotel',
+      });
+      Issue.belongsTo(models.user, {
+        foreignKey: 'id_reporter',
+        as: 'reporter',
+      });
+    }    
+  }
+	Issue.init(
     {
       id: {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
+      },
+      id_reporter: {
+        type: DataTypes.STRING,
+      },
+      id_hotel: {
+        type: DataTypes.STRING,
       },
       room: {
         type: DataTypes.STRING,
@@ -45,18 +60,10 @@ Issue.init(
       },
     },
     {
-      sequelize: sequelize,
+      sequelize,
       tableName: "issue",
       modelName: "issue",
     }
-);
-
-Issue.belongsTo(Hotel, {
-  foreignKey: { name: 'id_hotel' },
-  targetKey: 'id',
-})
-
-Issue.belongsTo(User, {
-  foreignKey: { name: 'id_reporter' },
-  targetKey: 'id',
-})
+  );
+	return Issue;
+}
