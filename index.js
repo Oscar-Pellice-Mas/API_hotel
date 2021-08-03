@@ -4,6 +4,11 @@ const issuesRoutes = require('./src/routes/issues');
 const materialsRoutes = require('./src/routes/materials');
 const middleware = require('./src/middlewares/authentication');
 require('dotenv').config();
+const { db } = require('./src/services/db');
+
+db.authenticate()
+  .then(() => console.log("Connected to database"))
+  .catch((err) => console.log("Error: ", err));
 
 const app = express();
 
