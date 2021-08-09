@@ -3,7 +3,7 @@ require('dotenv').config();
 const usersRoutes = require('./src/routes/user/user.routes');
 const issuesRoutes = require('./src/routes/issues');
 const hotelsRoutes = require('./src/routes/hotel/hotel.routes');
-const materialsRoutes = require('./src/routes/materials');
+const materialsRoutes = require('./src/routes/material/materials.routes');
 const middleware = require('./src/middlewares/authentication');
 const { db } = require('./src/services/db');
 
