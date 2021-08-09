@@ -1,8 +1,11 @@
+const { getAllMaterials } = require('./materials.controller');
+
 const router = require('express').Router()
 
 // /materials
-router.get('/', (req, res) => {//retorna tots els materials
-    res.json({ok: true})
+router.get('/', async (req, res) => {//retorna tots els materials
+    const result = await getAllMaterials({});
+    res.send({ ...result });
 });
 
 // /materials/new

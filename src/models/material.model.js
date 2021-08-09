@@ -2,7 +2,14 @@
 const { Model } = require ("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-    class Material extends Model {}
+    class Material extends Model {
+      static associate(models) {
+        Material.belongsTo(models.hotel, {
+            foreignKey: { name: 'id_hotel' },
+            targetKey: 'id',
+        });
+      }
+    }
     Material.init({
         id: {
             type: DataTypes.STRING,
