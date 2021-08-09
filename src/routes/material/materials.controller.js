@@ -34,6 +34,34 @@ const Hotel = require('../../models').hotel;
     }
 };
 
+const addNewMaterial = async (material) => {
+    try{
+        const newMaterial = await Material.create({
+            id: 1,
+            id_hotel: material.id_hotel,
+            name: material.name,
+            quantity: material.quantity,
+            price: material.price,
+            average: material.average,
+            timestamps: false
+        });
+
+        return{
+            success: true,
+            code: code.success,
+            lead: newMaterial
+        };
+    } catch (error){
+        console.log(error);
+        return {
+          success: false,
+          code: code.error,
+          error: error,
+        };
+    }
+};
+
 module.exports = {
     getAllMaterials,
+    addNewMaterial
 }

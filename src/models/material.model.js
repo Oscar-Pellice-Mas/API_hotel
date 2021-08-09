@@ -2,7 +2,7 @@
 const { Model } = require ("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-    class Material extends Model {
+    class Material extends Model {      
       static associate(models) {
         Material.belongsTo(models.hotel, {
             foreignKey: { name: 'id_hotel' },
@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
           sequelize: sequelize,
+          timestamps: false,
           tableName: "material",
           modelName: "material",            
         });

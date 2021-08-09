@@ -1,4 +1,4 @@
-const { getAllMaterials } = require('./materials.controller');
+const { getAllMaterials, addNewMaterial } = require('./materials.controller');
 
 const router = require('express').Router()
 
@@ -9,8 +9,10 @@ router.get('/', async (req, res) => {//retorna tots els materials
 });
 
 // /materials/new
-router.post('/new', (req, res) => {//crea material nou
-    res.json({ok: true})
+router.post('/new', async (req, res) => {//crea material nou
+    console.log(req.body)
+    const result = await addNewMaterial(req.body.material);
+    res.send({ ...result})
 });
 
 // /materials/delete/{id}
