@@ -85,8 +85,27 @@ const updateMaterial = async (material, id) => {
   	}
 };
 
+const deleteMaterial = async (materialId) => {
+	try {
+		const numberOfAffectedRows = await Material.destroy({where: {id: materialId}});
+		return{
+			success: true,
+			code: code.success,
+			lead: numberOfAffectedRows
+		};
+	} catch (error) {
+		console.log(error);
+    	return {
+    		success: false,
+     		code: code.error,
+      		error: error,
+		};
+	}
+};
+
 module.exports = {
     getAllMaterials,
     addNewMaterial,
-	updateMaterial
+	updateMaterial,
+	deleteMaterial
 }
