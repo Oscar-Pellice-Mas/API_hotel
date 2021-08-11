@@ -42,8 +42,7 @@ const addNewMaterial = async (material) => {
             name: material.name,
             quantity: material.quantity,
             price: material.price,
-            average: material.average,
-            timestamps: false
+            average: material.average
         });
 
         return{
