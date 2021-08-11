@@ -1,4 +1,4 @@
-const { getAllUsers } = require('./user.controller');
+const { getAllUsers, addNewUser, deleteUser } = require('./user.controller');
 
 const router = require('express').Router()
 
@@ -9,8 +9,9 @@ router.get('/', async (req, res) => {//retorna tots els users
 });
 
 // /users/new
-router.post('/new', (req, res) => {//crea usuari nou
-    res.json({ok: true})
+router.post('/new', async (req, res) => {//crea usuari nou
+    const result = await addNewUser(req.body.user)
+    res.send({ ...result})
 });
 
 // /users/update/{id}
@@ -19,8 +20,9 @@ router.post('/update/:id', (req, res) => {//modifica usuari
 });
 
 // /users/delete/{id}
-router.get('/delete/:id', (req, res) => {//elimina usuari
-    res.json({ok: true})
+router.get('/delete/:id', async (req, res) => {//elimina usuari
+    const result = await deleteUser(req.params.id)
+    res.send({ ...result})
 });
 
 module.exports = router;
