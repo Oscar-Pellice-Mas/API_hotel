@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const usersRoutes = require('./src/routes/user/user.routes');
-const issuesRoutes = require('./src/routes/issues');
+const issuesRoutes = require('./src/routes/issues/issues.routes');
 const hotelsRoutes = require('./src/routes/hotel/hotel.routes');
 const materialsRoutes = require('./src/routes/material/materials.routes');
 const middleware = require('./src/middlewares/authentication');
