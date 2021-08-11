@@ -14,7 +14,7 @@ const { db } = require('./src/services/db');
 const app = express();
 
 // set views engine
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env["PORT"] || 3000);
 
 // middlewares
 app.use(express.json());
