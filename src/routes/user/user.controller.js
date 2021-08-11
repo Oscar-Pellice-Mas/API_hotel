@@ -60,6 +60,29 @@ const addNewUser = async (user) => {
   }
 };
 
+const updateUser = async (user, id) => {
+	try {
+		const [numberOfAffectedRows, affectedRows] = await User.update({
+				name: user.name,
+				password: user.password,
+				role: user.role
+			}, {where:{id: id}}
+		)
+		return {
+			success: true,
+			code: code.success,
+			lead: affectedRows
+		};
+	} catch (error) {
+		console.log(error);
+		return {
+			success: false,
+			code: code.error,
+			error: error
+		};
+	}
+};
+
 const deleteUser = async (userId) => {
 	try {
 		const numberOfAffectedRows = await User.destroy({where: {id: userId}});
@@ -81,5 +104,6 @@ const deleteUser = async (userId) => {
 module.exports = {
     getAllUsers,
     addNewUser,
+	updateUser,
 	deleteUser
 }
