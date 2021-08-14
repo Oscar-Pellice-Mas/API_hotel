@@ -1,8 +1,11 @@
+const { getAllIssues } = require('./issues.controller');
+
 const router = require('express').Router()
 
 // /issues
-router.get('/', (req, res) => {//retorna totes les issues en el body esta el sorting
-    res.json({ok: true})
+router.get('/', async (req, res) => {//retorna totes les issues en el body esta el sorting
+    const result = await getAllIssues({});
+    res.send({ ...result });
 });
 
 // /issues/new
