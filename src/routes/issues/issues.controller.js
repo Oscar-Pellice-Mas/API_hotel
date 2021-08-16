@@ -39,6 +39,39 @@ const Hotel = require('../../models').hotel;
     }
 };
 
+const newIssue = async (issue) => {
+	try {
+		const newIssue = await Issue.create({
+			id: 1,
+			id_hotel: issue.id_hotel,
+			id_reporter: issue.id_reporter,
+			room: issue.room,
+			title: issue.title,
+			description: issue.description,
+			picture: issue.picture,
+			status: issue.status,
+			category: issue.category,
+			subcategory: issue.subcategory,
+			priority: issue.priority,
+			date: issue.date
+
+		});
+		return{
+			success: true,
+			code: code.success,
+			lead: newIssue
+		};
+	} catch (error) {
+		console.log(error);
+        return {
+          	success: false,
+          	code: code.error,
+        	error: error,
+        };
+	}
+}
+
 module.exports = {
-    getAllIssues
+    getAllIssues,
+	newIssue
 }
