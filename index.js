@@ -4,6 +4,7 @@ const usersRoutes = require('./src/routes/user/user.routes');
 const issuesRoutes = require('./src/routes/issues/issues.routes');
 const hotelsRoutes = require('./src/routes/hotel/hotel.routes');
 const materialsRoutes = require('./src/routes/material/materials.routes');
+const revisionsRoutes = require('./src/routes/revision/revision.routes');
 const middleware = require('./src/middlewares/authentication');
 const { db } = require('./src/services/db');
 
@@ -34,6 +35,7 @@ app.use('/users', usersRoutes);
 app.use('/issues', issuesRoutes);
 app.use('/materials', materialsRoutes);
 app.use('/hotels', hotelsRoutes);
+app.use('/revision', revisionsRoutes);
 
 const PORT = process.env.PORT || 3000;
 

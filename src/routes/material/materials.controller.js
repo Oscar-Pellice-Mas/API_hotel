@@ -17,7 +17,6 @@ const Hotel = require('../../models').hotel;
             	as: 'hotel',
             	attributes: ["id", "phone", "name", "mail"],
         	}]
-
       	});
       	return {
         	success: true,
