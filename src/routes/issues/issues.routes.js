@@ -1,4 +1,4 @@
-const { getAllIssues, newIssue } = require('./issues.controller');
+const { getAllIssues, newIssue, updateIssue } = require('./issues.controller');
 
 const router = require('express').Router()
 
@@ -15,8 +15,9 @@ router.post('/new', async (req, res) => {//crea issue nova
 });
 
 // /issues/update/{id}
-router.post('/update/:id', (req, res) => {//actualitza issue en el body esta el status
-    res.json({ok: true})
+router.post('/update/:id', async (req, res) => {//actualitza issue en el body esta el status
+    const result = await updateIssue(req.body.issue, req.params.id);
+    res.send({ ...result})
 });
 
 // /issues/consume/{id}

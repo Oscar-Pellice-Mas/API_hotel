@@ -71,7 +71,33 @@ const newIssue = async (issue) => {
 	}
 }
 
+const updateIssue = async (issue, id) => {
+	try {
+		const [numberOfAffectedRows, affectedRows] = await Issue.update({
+				status: issue.status,
+				priority: issue.priority,
+				description: issue.description,
+				category: issue.category,
+				subcategory: issue.subcategory
+			},{where:{id: id}}
+		)
+		return{
+			success: true,
+			code: code.success,
+			lead: affectedRows
+		};
+	} catch (error) {
+		console.log(error);
+    	return {
+    		success: false,
+     		code: code.error,
+      		error: error,
+		};
+	}
+};
+
 module.exports = {
     getAllIssues,
-	newIssue
+	newIssue,
+	updateIssue
 }
