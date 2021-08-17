@@ -96,8 +96,27 @@ const updateIssue = async (issue, id) => {
 	}
 };
 
+const deleteIssue = async (issueId) => {
+	try {
+		const numberOfAffectedRows = await Issue.destroy({where: {id: issueId}});
+		return{
+			success: true,
+			code: code.success,
+			lead: numberOfAffectedRows
+		};
+	} catch (error) {
+		console.log(error);
+    	return {
+    		success: false,
+     		code: code.error,
+      		error: error,
+		};
+	}
+};
+
 module.exports = {
     getAllIssues,
 	newIssue,
-	updateIssue
+	updateIssue,
+	deleteIssue
 }
