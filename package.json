@@ -1,7 +1,7 @@
 {
-  "name": "dona-timos",
-  "version": "1.0.0",
-  "description": "Doña Timos Web",
+  "name": "api-hotel-management",
+  "version": "0.1.0",
+  "description": "API Hotel management",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clap-your-brand/dona-timos.git"
+    "url": "git+https://github.com/Oscar-Pellice-Mas/API_hotel.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/clap-your-brand/dona-timos/issues"
+    "url": "https://github.com/Oscar-Pellice-Mas/API_hotel/issues"
   },
-  "homepage": "https://github.com/clap-your-brand/dona-timos#readme",
+  "homepage": "https://github.com/Oscar-Pellice-Mas/API_hotel#readme",
   "devDependencies": {
     "nodemon": "^2.0.7"
   },
