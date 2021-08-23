@@ -1,10 +1,16 @@
-const { getAllIssues, newIssue, updateIssue, deleteIssue } = require('./issues.controller');
+const { getAllIssues, newIssue, updateIssue, deleteIssue, getIssue } = require('./issues.controller');
 
 const router = require('express').Router()
 
 // /issues
 router.get('/', async (req, res) => {//retorna totes les issues en el body esta el sorting
     const result = await getAllIssues({});
+    res.send({ ...result });
+});
+
+// /issues
+router.get('/:id', async (req, res) => {
+    const result = await getIssue(req.params.id);
     res.send({ ...result });
 });
 

@@ -1,10 +1,16 @@
-const { getAllRevisions, addNewRevision, updateRevision, deleteRevision } = require('./revision.controller');
+const { getAllRevisions, addNewRevision, updateRevision, deleteRevision, getRevision } = require('./revision.controller');
 
 const router = require('express').Router()
 
 // /revision
 router.get('/', async (req, res) => {
     const result = await getAllRevisions({});
+    res.send({...result});
+});
+
+// /revision/{id}
+router.get('/:id', async (req, res) => {
+    const result = await getRevision(req.params.id);
     res.send({...result});
 });
 

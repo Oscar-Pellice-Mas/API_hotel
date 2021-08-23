@@ -11,11 +11,35 @@ const Hotel = require('../../models').hotel;
 	try {
 		const result = await Material.findAll({
         	where: { ...condition },
-        	attributes: ["id", "name", "quantity", "price", "average"],
         	include: [{
             	model: Hotel,
             	as: 'hotel',
-            	attributes: ["id", "phone", "name", "mail"],
+            	attributes: ["id", "name"],
+        	}]
+      	});
+      	return {
+        	success: true,
+        	code: code.success,
+        	lead: result,
+		};
+    } catch (error) {
+		console.log(error);
+		return {
+			success: false,
+        	code: code.error,
+        	error: error,
+		};
+    }
+};
+
+const getMaterial = async (id) => {
+	try {
+		const result = await Material.findAll({
+        	where: { id: id },
+        	include: [{
+            	model: Hotel,
+            	as: 'hotel',
+            	attributes: ["id", "name"],
         	}]
       	});
       	return {
@@ -105,5 +129,6 @@ module.exports = {
     getAllMaterials,
     addNewMaterial,
 	updateMaterial,
-	deleteMaterial
+	deleteMaterial,
+	getMaterial
 }

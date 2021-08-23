@@ -39,6 +39,37 @@ const Hotel = require('../../models').hotel;
     }
 };
 
+const getIssue = async (id) => {
+	try {
+		const result = await Issue.findAll({
+        	where: { id:id },
+        	include: [{
+            	model: Hotel,
+            	as: 'hotel',
+            	attributes: ["id", "name"],
+        	}, 
+            {
+                model: User,
+                as: 'reporter',
+                attributes: ["id", "name", "role"]
+            }]
+
+      	});
+      	return {
+        	success: true,
+        	code: code.success,
+        	lead: result,
+		};
+    } catch (error) {
+		console.log(error);
+		return {
+			success: false,
+        	code: code.error,
+        	error: error,
+		};
+    }
+}
+
 const newIssue = async (issue) => {
 	try {
 		const newIssue = await Issue.create({
@@ -116,6 +147,7 @@ const deleteIssue = async (issueId) => {
 
 module.exports = {
     getAllIssues,
+	getIssue,
 	newIssue,
 	updateIssue,
 	deleteIssue

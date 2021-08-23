@@ -27,6 +27,31 @@ const getAllRevisions = async (condition) => {
     }
 };
 
+const getRevision = async (id) => {
+    try {
+        const result = await Revision.findAll({
+            where: { id: id },
+        	include: [{
+            	model: Hotel,
+            	as: 'hotel',
+            	attributes: ["id", "name"],
+        	}]
+        });
+        return {
+        	success: true,
+        	code: code.success,
+        	lead: result,
+		};
+    } catch (error) {
+        console.log(error);
+		return {
+			success: false,
+        	code: code.error,
+        	error: error,
+		};
+    }
+};
+
 const addNewRevision = async (revision) => {
 	try {
 		const newRevision = Revision.create({
@@ -98,5 +123,6 @@ module.exports = {
     getAllRevisions,
 	addNewRevision,
 	updateRevision,
-	deleteRevision
+	deleteRevision,
+	getRevision
 }
