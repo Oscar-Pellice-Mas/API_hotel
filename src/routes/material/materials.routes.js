@@ -4,14 +4,17 @@ const router = require('express').Router()
 
 // /materials
 router.get('/', async (req, res) => {//retorna tots els materials
-    const result = await getAllMaterials({});
-    res.send({ ...result });
+    const materials = await getAllMaterials({});
+    for(var i = 0; i < materials.lead.length; i++){
+        materials.lead[i].average = extractAverage(await getMaterialAverage(materials.lead[i].id, materials.lead[i].id_hotel));      
+    }
+    res.send({ ...materials });
 });
 
 // /materials/:id
 router.get('/:id', async (req, res) => {
-    const result = await getMaterial(req.params.id);
-    res.send({ ...result });
+    const materials = await getMaterial(req.params.id);
+    res.send({ ...materials });
 });
 
 // /materials/new
