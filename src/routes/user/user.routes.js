@@ -1,5 +1,5 @@
 const { updateMaterial } = require('../material/materials.controller');
-const { getAllUsers, addNewUser, updateUser, deleteUser } = require('./user.controller');
+const { getAllUsers, getUser, addNewUser, updateUser, deleteUser } = require('./user.controller');
 
 const router = require('express').Router()
 
@@ -7,6 +7,12 @@ const router = require('express').Router()
 router.get('/', async (req, res) => {//retorna tots els users
     const result = await getAllUsers({});
     res.send({ ...result });
+});
+
+// /users/:id
+router.get('/:id', async(req, res) => {
+    const result = await getUser(req.params.id);
+    res.send({ ...result});
 });
 
 // /users/new

@@ -35,6 +35,33 @@ const getAllUsers = async (condition) => {
     }
 };
 
+const getUser = async (id) => {
+	try {
+		const result = await User.findAll({
+        	where: { id:id },
+          attributes: ["id", "password", "name", "role"],
+        	include: [{
+            model: Hotel,
+            as: 'hotel',
+            attributes: ["id", "phone", "name", "mail"],
+        }]
+
+      	});
+      	return {
+        	success: true,
+        	code: code.success,
+        	lead: result,
+		};
+    } catch (error) {
+		console.log(error);
+		return {
+			success: false,
+        	code: code.error,
+        	error: error,
+		};
+    }
+}
+
 const addNewUser = async (user) => {
   try{
       const newUser = await User.create({
@@ -103,6 +130,7 @@ const deleteUser = async (userId) => {
 
 module.exports = {
     getAllUsers,
+    getUser,
     addNewUser,
 	updateUser,
 	deleteUser
