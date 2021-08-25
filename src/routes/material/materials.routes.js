@@ -1,4 +1,4 @@
-const { getAllMaterials, addNewMaterial, updateMaterial, deleteMaterial, getMaterial } = require('./materials.controller');
+const { getAllMaterials, addNewMaterial, updateMaterial, deleteMaterial, getMaterial, getMaterialAverage, extractAverage } = require('./materials.controller');
 
 const router = require('express').Router()
 
@@ -32,5 +32,11 @@ router.post('/update/:id', async (req, res) => {//update material
     res.send({ ...result})
 });
 
+
+router.get('/average/:id', async (req, res) => {
+    const averages = await getMaterialAverage(req.params.id, "0f1c446d-f92e-11eb-a416-020000fcbc46");
+    averages["average"] = extractAverage(averages);
+    res.send({ ...averages})
+});
 
 module.exports = router;

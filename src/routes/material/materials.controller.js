@@ -1,5 +1,7 @@
 const code = require('../../helpers/status');
+const { Op } = require("sequelize");
 const Material = require('../../models').material;
+const Average = require('../../models').average;
 const Hotel = require('../../models').hotel;
 
 /**
@@ -125,10 +127,46 @@ const deleteMaterial = async (materialId) => {
 	}
 };
 
+const getMaterialAverage = async (materialId, hotelId) => {
+	try {
+		const result = await Average.findAll({
+        	where: {
+				[Op.and]: [
+					{ id_hotel: hotelId },
+					{ id_material: materialId }
+				]
+			},
+			attributes: ["price", "quantity"]
+      	});
+      	return {
+        	success: true,
+        	code: code.success,
+        	lead: result,
+		};
+	} catch (error) {
+		console.log(error);
+    	return {
+    		success: false,
+     		code: code.error,
+      		error: error,
+		};		
+	}
+};
+
+const extractAverage = (averages) => {
+	var avg = 0;
+    for(let average of averages.lead){
+        avg += average.price;
+    }
+    return avg/averages.lead.length;
+};
+
 module.exports = {
     getAllMaterials,
     addNewMaterial,
 	updateMaterial,
 	deleteMaterial,
-	getMaterial
+	getMaterial,
+	getMaterialAverage,
+	extractAverage
 }
