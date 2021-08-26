@@ -62,6 +62,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      visual_id: {
+        type: DataTypes.INTEGER
+      }
     },
     {
       sequelize: sequelize,
