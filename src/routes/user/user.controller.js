@@ -12,7 +12,6 @@ const getAllUsers = async (condition) => {
     try {
       const result = await User.findAll({
         where: { ...condition },
-        attributes: ["id", "password", "name", "role"],
         include: [{
             model: Hotel,
             as: 'hotel',
@@ -39,7 +38,6 @@ const getUser = async (id) => {
 	try {
 		const result = await User.findAll({
         	where: { id:id },
-          attributes: ["id", "password", "name", "role"],
         	include: [{
             model: Hotel,
             as: 'hotel',
@@ -132,6 +130,6 @@ module.exports = {
     getAllUsers,
     getUser,
     addNewUser,
-	updateUser,
-	deleteUser
+	  updateUser,
+	  deleteUser
 }

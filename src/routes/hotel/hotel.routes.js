@@ -1,26 +1,35 @@
-const { getAllHotels } = require('./hotel.controller');
+const { getAllHotels, getHotel, addNewHotel, updateHotel, deleteHotel } = require('./hotel.controller');
 
 const router = require('express').Router()
 
-// /users
+// /hotels
 router.get('/', async (req, res) => {//retorna tots els users
     const result = await getAllHotels({});
     res.send({ ...result });
 });
 
-// /users/new
-router.post('/new', (req, res) => {//crea usuari nou
-    res.json({ok: true})
+// /hotels/id
+router.get('/:id', async (req, res) => {//crea hotel nou
+    const result = await getHotel(req.params.id);
+    res.send({ ...result });
 });
 
-// /users/update/{id}
-router.post('/update/:id', (req, res) => {//modifica usuari
-    res.json({ok: true})
+// /hotels/new
+router.post('/new', async (req, res) => {//crea hotel nou
+    const result = await addNewHotel(req.body.hotel);
+    res.send({ ...result });
 });
 
-// /users/delete/{id}
-router.get('/delete/:id', (req, res) => {//elimina usuari
-    res.json({ok: true})
+// /hotels/update/{id}
+router.post('/update/:id', async (req, res) => {//modifica hotel
+    const result = await updateHotel(req.body.hotel, req.params.id);
+    res.send({ ...result });
+});
+
+// /hotels/delete/{id}
+router.get('/delete/:id', async (req, res) => {//elimina hotel
+    const result = await deleteHotel(req.body.hotel, req.params.id);
+    res.send({ ...result });
 });
 
 module.exports = router;
