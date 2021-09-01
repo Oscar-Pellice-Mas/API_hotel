@@ -11,6 +11,7 @@ const Hotel = require('../../models').hotel;
  const getAllIssues = async (condition) => {
 	try {
 		const result = await Issue.findAll({
+			order: [['visual_id', 'ASC']],
         	where: { ...condition },
         	include: [{
             	model: Hotel,
