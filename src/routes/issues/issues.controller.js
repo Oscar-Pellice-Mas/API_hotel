@@ -87,7 +87,8 @@ const newIssue = async (issue) => {
 			category: issue.category,
 			subcategory: issue.subcategory,
 			priority: issue.priority,
-			date: issue.date
+			date: issue.date,
+			id_carrec: issue.id_carrec
 
 		});
 		return{

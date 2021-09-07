@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id_reporter',
         as: 'reporter',
       });
+      Issue.belongsTo(models.user, {
+        foreignKey: 'id_carrec',
+        as: 'carrec',
+      });
     }    
   }
 	Issue.init(
@@ -22,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       id_reporter: {
         type: DataTypes.STRING,
+      },
+      id_carrec: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       id_hotel: {
         type: DataTypes.STRING,
