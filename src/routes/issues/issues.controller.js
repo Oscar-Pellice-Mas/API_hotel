@@ -106,7 +106,6 @@ const newIssue = async (issue) => {
 }
 
 const logNewIssue = async (issue) => {
-	//console.log(issue);
 	try {
 		const newComment = await Comment.create({
 			issue_id: issue.id,
@@ -172,11 +171,39 @@ const deleteIssue = async (issueId) => {
 	}
 };
 
+const logUpdates = async (updates) => {
+	let comments = new Array();
+	for(let update of updates.list){
+		try {
+			const newComment = await Comment.create({
+				issue_id: updates.issue_id,
+				hotel_id: updates.hotel_id,
+				type: 2,
+				comentari: update
+			});
+			comments.push(newComment);
+		} catch (error) {
+			console.log(error);
+			return {  
+				success: false,
+				code: code.error,
+				error: error,
+			};
+		}
+	}
+	return{
+		success: true,
+		code: code.success,
+		lead: comments
+	};
+}
+
 module.exports = {
     getAllIssues,
 	getIssue,
 	newIssue,
 	updateIssue,
 	deleteIssue,
-	logNewIssue
+	logNewIssue,
+	logUpdates
 }

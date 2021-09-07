@@ -1,4 +1,4 @@
-const { getAllIssues, newIssue, updateIssue, deleteIssue, getIssue, logNewIssue } = require('./issues.controller');
+const { getAllIssues, newIssue, updateIssue, deleteIssue, getIssue, logNewIssue, logUpdates } = require('./issues.controller');
 
 const router = require('express').Router()
 
@@ -36,6 +36,12 @@ router.get('/delete/:id', async (req, res) => {
 // /issues/consume/{id}
 router.post('/consume/:id', (req, res) => {//consumeix material d una issue
     res.json({ok: true})
+});
+
+// /issues/updates
+router.post('/updates', (req, res) => {//rep els camps que s han fet update de les issues
+    const result = logUpdates(req.body.updates);
+    res.send({...result});
 });
 
 
