@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         {
             id:{
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                autoIncrement: true,
                 primaryKey: true
             },
             id_hotel:{
