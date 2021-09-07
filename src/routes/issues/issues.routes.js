@@ -1,4 +1,4 @@
-const { getAllIssues, newIssue, updateIssue, deleteIssue, getIssue } = require('./issues.controller');
+const { getAllIssues, newIssue, updateIssue, deleteIssue, getIssue, logNewIssue } = require('./issues.controller');
 
 const router = require('express').Router()
 
@@ -17,6 +17,7 @@ router.get('/:id', async (req, res) => {
 // /issues/new
 router.post('/new', async (req, res) => {//crea issue nova
     const result = await newIssue(req.body.issue);
+    await logNewIssue(result.lead);
     res.send({ ...result });
 });
 

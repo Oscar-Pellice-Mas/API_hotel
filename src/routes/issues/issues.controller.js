@@ -1,7 +1,9 @@
 const code = require('../../helpers/status');
 const Issue = require('../../models').issue;
 const User = require('../../models').user;
+const { v4: uuidv4 } = require('uuid');
 const Hotel = require('../../models').hotel;
+const Comment = require('../../models').comentari;
 
 /**
  * Get all issues
@@ -73,7 +75,7 @@ const getIssue = async (id) => {
 const newIssue = async (issue) => {
 	try {
 		const newIssue = await Issue.create({
-			id: 1,
+			id: uuidv4(),
 			id_hotel: issue.id_hotel,
 			id_reporter: issue.id_reporter,
 			room: issue.room,
@@ -101,6 +103,30 @@ const newIssue = async (issue) => {
         };
 	}
 }
+
+const logNewIssue = async (issue) => {
+	//console.log(issue);
+	try {
+		const newComment = await Comment.create({
+			issue_id: issue.id,
+			hotel_id: issue.id_hotel,
+			type: 0,
+			comentari: issue.title
+		});
+		return{
+			success: true,
+			code: code.success,
+			lead: newComment
+		};
+	} catch (error) {
+		console.log(error);
+        return {
+          	success: false,
+          	code: code.error,
+        	error: error,
+        };
+	}
+};
 
 const updateIssue = async (issue, id) => {
 	try {
@@ -150,5 +176,6 @@ module.exports = {
 	getIssue,
 	newIssue,
 	updateIssue,
-	deleteIssue
+	deleteIssue,
+	logNewIssue
 }
