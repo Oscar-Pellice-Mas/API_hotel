@@ -13,6 +13,7 @@ const Comment = require('../../models').comentari;
  const getAllIssues = async (condition) => {
 	try {
 		const result = await Issue.findAll({
+			order: [['visual_id', 'ASC']],
         	where: { ...condition },
         	include: [{
             	model: Hotel,
