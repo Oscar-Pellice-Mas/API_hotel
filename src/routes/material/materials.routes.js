@@ -37,7 +37,7 @@ router.post('/update/:id', async (req, res) => {//update material
 
 
 router.get('/average/:id', async (req, res) => {
-    const averages = await getMaterialAverage(req.params.id, "0f1c446d-f92e-11eb-a416-020000fcbc46");
+    const averages = await getMaterialAverage(req.params.id, "623fbf6c-067f-11ec-a416-020000fcbc46");
     averages["average"] = extractAverage(averages);
     res.send({ ...averages})
 });
