@@ -3,6 +3,7 @@ const Issue = require('../../models').issue;
 const User = require('../../models').user;
 const MatRequeried = require('../../models').material_required;
 const { v4: uuidv4 } = require('uuid');
+const { Op } = require("sequelize");
 const Hotel = require('../../models').hotel;
 const Comment = require('../../models').comentari;
 
@@ -218,12 +219,40 @@ const addMaterial = async (materialList, issueId) => {
 				error: error,
 			};			
 		}
-		//console.log(material);
 	});
 	return{
 		success: true,
 		code: code.success,
 		lead: allMaterials
+	};
+}
+
+const updateRequiredMaterial = async (materialList, issueId) => {
+	var allRows = 0;
+	materialList.forEach(async (material) => {
+		try {
+			const [numberOfAffectedRows, affectedRows] = await MatRequeried.update({
+				quantity: material.quantity
+			},{where:{
+				[Op.and]:[
+					{id_material: material.id_material},
+					{id_issue: issueId}
+				]
+			}});
+			allRows += affectedRows;
+		} catch (error) {
+			console.log(error);
+			return {  
+				success: false,
+				code: code.error,
+				error: error,
+			};			
+		}
+	});
+	return{
+		success: true,
+		code: code.success,
+		lead: allRows
 	};
 }
 
@@ -235,5 +264,6 @@ module.exports = {
 	deleteIssue,
 	logNewIssue,
 	logUpdates,
-	addMaterial
+	addMaterial,
+	updateRequiredMaterial
 }

@@ -1,4 +1,4 @@
-const { getAllIssues, newIssue, updateIssue, deleteIssue, getIssue, logNewIssue, logUpdates, addMaterial } = require('./issues.controller');
+const { getAllIssues, newIssue, updateIssue, deleteIssue, getIssue, logNewIssue, logUpdates, addMaterial, updateRequiredMaterial } = require('./issues.controller');
 
 const router = require('express').Router()
 
@@ -41,6 +41,12 @@ router.post('/consume/:id', (req, res) => {//consumeix material d una issue
 // /issues/material/add/{id}
 router.post('/material/add/:id', async (req, res) => {//afegeix material d una issue
     const result = await addMaterial(req.body.materialList, req.params.id);
+    res.send({...result});
+});
+
+// /issues/material/add/{id}
+router.post('/material/update/:id', async (req, res) => {//actualitza la quantitat del material d una issue
+    const result = await updateRequiredMaterial(req.body.materialList, req.params.id);
     res.send({...result});
 });
 
