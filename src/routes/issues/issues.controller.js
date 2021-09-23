@@ -2,6 +2,7 @@ const code = require('../../helpers/status');
 const Issue = require('../../models').issue;
 const User = require('../../models').user;
 const MatRequeried = require('../../models').material_required;
+const MatUsed = require('../../models').material_used;
 const { v4: uuidv4 } = require('uuid');
 const { Op } = require("sequelize");
 const Hotel = require('../../models').hotel;
@@ -256,6 +257,57 @@ const updateRequiredMaterial = async (materialList, issueId) => {
 	};
 }
 
+const consumeMaterial = async (materialList, issueId) => {
+	materialList.forEach(async (material) => {
+		try {
+			await MatRequeried.increment('quantity',
+			{by: -(material.quantity),
+			where:{
+				[Op.and]:[
+					{id_material: material.id_material},
+					{id_issue: issueId}
+				]
+			}}
+		);
+		//comprovar si existeix l entrada a material used, si no hi es crearla, d altre manera 
+		const item = await MatUsed.findOne({where:{
+			[Op.and]:[
+				{id_material: material.id_material},
+				{id_issue: issueId}
+			]
+		}});
+		if(item === null){
+			await MatUsed.create({
+				id_issue: issueId,
+				id_material: material.id_material,
+				quantity: material.quantity
+			});
+		}else{
+			await MatUsed.increment('quantity',
+				{by: material.quantity,
+				where:{
+					[Op.and]:[
+						{id_material: material.id_material},
+						{id_issue: issueId}
+					]
+				}}
+			);
+		}
+		} catch (error) {
+			return {  
+				success: false,
+				code: code.error,
+				error: error,
+			};
+		}
+	});
+	return{
+		success: true,
+		code: code.success,
+		lead: "allRows"
+	};
+}
+
 module.exports = {
     getAllIssues,
 	getIssue,
@@ -265,5 +317,6 @@ module.exports = {
 	logNewIssue,
 	logUpdates,
 	addMaterial,
-	updateRequiredMaterial
+	updateRequiredMaterial,
+	consumeMaterial
 }
