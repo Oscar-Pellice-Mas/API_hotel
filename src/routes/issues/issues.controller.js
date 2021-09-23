@@ -1,6 +1,7 @@
 const code = require('../../helpers/status');
 const Issue = require('../../models').issue;
 const User = require('../../models').user;
+const MatRequeried = require('../../models').material_required;
 const { v4: uuidv4 } = require('uuid');
 const Hotel = require('../../models').hotel;
 const Comment = require('../../models').comentari;
@@ -199,6 +200,33 @@ const logUpdates = async (updates) => {
 	};
 }
 
+const addMaterial = async (materialList, issueId) => {
+	var allMaterials = []
+	materialList.forEach(async (material) => {
+		try {
+			const newMaterial = await MatRequeried.create({
+				id_issue: issueId,
+				id_material: material.id_material,
+				quantity: material.quantity
+			});
+			allMaterials.push(newMaterial);
+		} catch (error) {
+			console.log(error);
+			return {  
+				success: false,
+				code: code.error,
+				error: error,
+			};			
+		}
+		//console.log(material);
+	});
+	return{
+		success: true,
+		code: code.success,
+		lead: allMaterials
+	};
+}
+
 module.exports = {
     getAllIssues,
 	getIssue,
@@ -206,5 +234,6 @@ module.exports = {
 	updateIssue,
 	deleteIssue,
 	logNewIssue,
-	logUpdates
+	logUpdates,
+	addMaterial
 }
