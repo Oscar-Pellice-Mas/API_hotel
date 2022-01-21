@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+model average {
+  id          Int      @id @default(autoincrement())
+  id_hotel    String   @default("") @db.VarChar(128)
+  id_material String   @default("") @db.VarChar(128)
+  price       Float?   @db.Float
+  quantity    Int?
+  created_at  DateTime @default(now()) @db.DateTime(0)
+}
+
+model comentari {
+  id        Int     @id @default(autoincrement())
+  issue_id  String? @db.VarChar(128)
+  hotel_id  String? @db.VarChar(128)
+  type      Int?
+  comentari String? @db.Text
+  issue     issue?  @relation(fields: [issue_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comentari_ibfk_1")
+
+  @@index([issue_id], map: "issue_id")
+}
+
+model hotel {
+  id       String     @id @db.VarChar(255)
+  name     String     @default("") @db.VarChar(255)
+  mail     String     @default("") @db.VarChar(255)
+  phone    String     @default("") @db.VarChar(255)
+  issue    issue[]
+  material material[]
+  revision revision[]
+  upgrade  upgrade[]
+  user     user[]
+}
+
+model issue {
+  id                           String              @id @default("") @db.VarChar(128)
+  room                         String              @default("") @db.VarChar(255)
+  title                        String              @default("") @db.VarChar(255)
+  description                  String?             @db.Text
+  picture                      String              @default("") @db.VarChar(255)
+  status                       Int                 @default(0)
+  id_hotel                     String              @default("") @db.VarChar(255)
+  id_reporter                  String              @default("") @db.VarChar(128)
+  category                     String              @db.VarChar(255)
+  subcategory                  String?             @db.Text
+  priority                     Int?
+  date                         String              @db.VarChar(255)
+  createdAt                    DateTime?           @default(now()) @db.DateTime(0)
+  updatedAt                    DateTime?           @default(now()) @db.DateTime(0)
+  visual_id                    Int?
+  id_carrec                    String              @default("") @db.VarChar(128)
+  user_issue_id_carrecTouser   user                @relation("issue_id_carrecTouser", fields: [id_carrec], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "issue_user_id_fk")
+  hotel                        hotel               @relation(fields: [id_hotel], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "issue_ibfk_1")
+  user_issue_id_reporterTouser user                @relation("issue_id_reporterTouser", fields: [id_reporter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "issue_ibfk_2")
+  comentari                    comentari[]
+  material_required            material_required[]
+  material_used                material_used[]
+
+  @@index([id_reporter], map: "id_reporter")
+  @@index([id_hotel], map: "issue_ibfk_1")
+  @@index([id_carrec], map: "issue_user_id_fk")
+}
+
+model issueID {
+  id_hotel    String? @db.VarChar(128)
+  issue_count Int?    @default(0)
+  id          String  @id @default("") @db.VarChar(128)
+}
+
+model material {
+  id                String              @id @default("") @db.VarChar(128)
+  id_hotel          String              @default("") @db.VarChar(255)
+  name              String              @default("") @db.VarChar(255)
+  quantity          Int                 @default(0)
+  price             Float               @default(0) @db.Float
+  average           String?             @db.Text
+  hotel             hotel               @relation(fields: [id_hotel], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "material_ibfk_1")
+  material_required material_required[]
+  material_used     material_used[]
+
+  @@index([id_hotel], map: "material_ibfk_1")
+}
+
+model material_required {
+  id_issue    String   @default("") @db.VarChar(128)
+  id_material String   @default("") @db.VarChar(128)
+  quantity    Int
+  issue       issue    @relation(fields: [id_issue], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "material_required_ibfk_1")
+  material    material @relation(fields: [id_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "material_required_ibfk_2")
+
+  @@id([id_issue, id_material])
+  @@index([id_material], map: "id_material")
+}
+
+model material_used {
+  id_issue    String   @default("") @db.VarChar(128)
+  id_material String   @default("") @db.VarChar(128)
+  quantity    Int
+  issue       issue    @relation(fields: [id_issue], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "material_used_ibfk_1")
+  material    material @relation(fields: [id_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "material_used_ibfk_2")
+
+  @@id([id_issue, id_material])
+  @@index([id_material], map: "id_material")
+}
+
+model revision {
+  id          String    @id @default("") @db.VarChar(128)
+  id_hotel    String    @default("") @db.VarChar(255)
+  title       String    @default("") @db.VarChar(255)
+  description String?   @db.Text
+  date        DateTime  @db.Date
+  picture     String    @default("") @db.VarChar(255)
+  next        DateTime? @db.Date
+  hotel       hotel     @relation(fields: [id_hotel], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "revision_ibfk_1")
+
+  @@index([id_hotel], map: "revision_ibfk_1")
+}
+
+model upgrade {
+  id          String   @id @default("") @db.VarChar(128)
+  title       String   @default("") @db.VarChar(255)
+  id_hotel    String   @default("") @db.VarChar(255)
+  id_reporter String   @default("") @db.VarChar(128)
+  description String?  @db.Text
+  date        DateTime @db.Date
+  status      Int      @default(0)
+  room        String   @default("") @db.VarChar(255)
+  picture     String   @default("") @db.VarChar(255)
+  hotel       hotel    @relation(fields: [id_hotel], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "upgrade_ibfk_1")
+  user        user     @relation(fields: [id_reporter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "upgrade_ibfk_2")
+
+  @@index([id_reporter], map: "id_reporter")
+  @@index([id_hotel], map: "upgrade_ibfk_1")
+}
+
+model user {
+  id                            String    @id @db.VarChar(128)
+  password                      String    @default("") @db.VarChar(255)
+  name                          String    @default("") @db.VarChar(255)
+  role                          Int?
+  id_hotel                      String    @default("") @db.VarChar(255)
+  hotel                         hotel     @relation(fields: [id_hotel], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_ibfk_1")
+  issue_issue_id_carrecTouser   issue[]   @relation("issue_id_carrecTouser")
+  issue_issue_id_reporterTouser issue[]   @relation("issue_id_reporterTouser")
+  upgrade                       upgrade[]
+
+  @@index([id_hotel], map: "user_ibfk_1")
+}
